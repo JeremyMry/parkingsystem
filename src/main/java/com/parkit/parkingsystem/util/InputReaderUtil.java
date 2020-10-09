@@ -10,7 +10,7 @@ public class InputReaderUtil {
     private static final Logger logger = LogManager.getLogger("InputReaderUtil");
 
     public int readSelection() {
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in, "UTF-8");
         try {
             int input = Integer.parseInt(scan.nextLine());
             return input;
@@ -22,7 +22,7 @@ public class InputReaderUtil {
     }
 
     public String readVehicleRegistrationNumber() {
-        Scanner scan = new Scanner(System.in);
+        Scanner scan = new Scanner(System.in, "UTF-8");
         try {
             String vehicleRegNumber= scan.nextLine();
             if(vehicleRegNumber == null || vehicleRegNumber.trim().length()==0) {

@@ -23,6 +23,9 @@ insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(2,true,'CAR');
 insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(3,true,'CAR');
 insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(4,true,'BIKE');
 insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(5,true,'BIKE');
+insert into ticket(PARKING_NUMBER,VEHICLE_REG_NUMBER,IN_TIME, OUT_TIME) values(1, "999","2020-09-24 22:21:20", "2020-09-24 22:23:20");
+insert into ticket(PARKING_NUMBER,VEHICLE_REG_NUMBER,IN_TIME, OUT_TIME) values(1, "999","2020-09-25 22:22:20", "2020-09-24 22:23:20");
+insert into ticket(PARKING_NUMBER,VEHICLE_REG_NUMBER,IN_TIME, OUT_TIME) values(1, "999","2020-09-25 22:22:20", "2020-09-24 22:23:20");
 commit;
 
 /* Setting up TEST DB */
@@ -50,7 +53,5 @@ insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(2,true,'CAR');
 insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(3,true,'CAR');
 insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(4,true,'BIKE');
 insert into parking(PARKING_NUMBER,AVAILABLE,TYPE) values(5,true,'BIKE');
-insert into prod.ticket(PARKING_NUMBER,VEHICLE_REG_NUMBER,IN_TIME, OUT_TIME) values(1, "999","2020-09-24 22:21:20", "2020-09-24 22:23:20");
-insert into prod.ticket(PARKING_NUMBER,VEHICLE_REG_NUMBER,IN_TIME, OUT_TIME) values(1, "999","2020-09-25 22:22:20", "2020-09-24 22:23:20");
-insert into prod.ticket(PARKING_NUMBER,VEHICLE_REG_NUMBER,IN_TIME, OUT_TIME) values(1, "999","2020-09-25 22:22:20", "2020-09-24 22:23:20");
+
 commit;

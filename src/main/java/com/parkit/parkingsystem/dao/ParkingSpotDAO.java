@@ -42,7 +42,7 @@ public class ParkingSpotDAO {
         return result;
     }
 
-    public boolean updateParking(ParkingSpot parkingSpot) throws ClassNotFoundException, SQLException, IOException {
+    public boolean updateParking(ParkingSpot parkingSpot) throws ClassNotFoundException, IOException {
         // update the availability fo that parking slot
         Connection con = null;
         try {
@@ -62,5 +62,4 @@ public class ParkingSpotDAO {
             return false;
         }
     }
-
 }

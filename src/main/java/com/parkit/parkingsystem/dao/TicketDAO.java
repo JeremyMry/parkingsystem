@@ -7,10 +7,10 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class TicketDAO {
 
@@ -100,16 +100,16 @@ public class TicketDAO {
 
     public int getVehicleRegNumberFromPastUsers(String vehicleRegNumber) {
         Connection con = null;
-        Integer count = 0;
+        Integer occurrences = 0;
 
         try {
             con = dataBaseConfig.getConnection();
-            PreparedStatement ps = con.prepareStatement(DBConstants.GET_HISTORY);
+            PreparedStatement ps = con.prepareStatement(DBConstants.GET_VEHICLE_COUNT);
             try {
                 ps.setString(1, vehicleRegNumber);
                  try (ResultSet rs = ps.executeQuery()) {
                      if (rs.next()) {
-                         count = rs.getInt(1);
+                         occurrences = rs.getInt(1);
                      }
                      dataBaseConfig.closeResultSet(rs);
                  }
@@ -118,8 +118,8 @@ public class TicketDAO {
                 dataBaseConfig.closeConnection(con);
             }
         } catch (Exception ex) {
-            logger.error("Error getting history", ex);
+            logger.error("Error getting past users vehicle reg number", ex);
         }
-        return count;
+        return occurrences;
     }
 }

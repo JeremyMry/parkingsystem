@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Properties;
@@ -16,16 +17,28 @@ public class DataBaseTestConfig extends DataBaseConfig {
 
     public Connection getConnection() throws ClassNotFoundException, SQLException, IOException {
         Properties properties = new Properties();
-        properties.load(new FileInputStream(new File("C:\\Users\\moryj\\OneDrive\\Documents\\FORMATION\\parkingsystem\\resources\\credentials.properties")));
-        String user = properties.getProperty("username");
-        String password = properties.getProperty("password");
-        String url = properties.getProperty("urltest");
-        String driver = properties.getProperty("driver");
-
-        logger.info("Create DB connection");
-        Class.forName(driver);
-        return DriverManager.getConnection(
-                url + "?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", user,password);
+        String user = null;
+        String password = null;
+        String url = null;
+        String driver = null;
+        try {
+            FileInputStream fileInputStream = new FileInputStream(new File("resources/credentials.properties"));
+            try {
+                properties.load(fileInputStream);
+                user = properties.getProperty("username");
+                password = properties.getProperty("password");
+                url = properties.getProperty("urltest");
+                driver = properties.getProperty("driver");
+                logger.info("Create DB connection");
+                Class.forName(driver);
+            } finally {
+                fileInputStream.close();
+            }
+            // return DriverManager.getConnection(url, user, pass);
+        } catch (FileNotFoundException e) {
+            System.out.println("chemin spécifié du fichier credentials.properties est incorrect");
+        }
+        return DriverManager.getConnection(url +"?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC", user, password);
     }
 
     public void closeConnection(Connection con){
