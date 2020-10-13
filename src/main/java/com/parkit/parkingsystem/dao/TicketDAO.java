@@ -98,6 +98,7 @@ public class TicketDAO {
         return false;
     }
 
+    // get how many times a specific reg number is store in the db
     public int getVehicleRegNumberFromPastUsers(String vehicleRegNumber) {
         Connection con = null;
         Integer occurrences = 0;

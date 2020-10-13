@@ -1,12 +1,10 @@
-package com.parkit.parkingsystem;
+package com.parkit.parkingsystem.integration;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import java.sql.Date;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,7 +19,7 @@ import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
 @ExtendWith(MockitoExtension.class)
-public class TicketDAOTest {
+public class TicketDAOIT {
 
     private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
     private static ParkingSpotDAO parkingSpotDAO;
@@ -45,6 +43,7 @@ public class TicketDAOTest {
     @BeforeEach
     private void setUpPerTest() throws Exception {
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+        dataBasePrepareService.clearDataBaseEntries();
     }
 
     @Test
@@ -113,7 +112,7 @@ public class TicketDAOTest {
         ticket.setVehicleRegNumber("ABCDEF");
         ticketDAO.saveTicket(ticket);
 
-        assertTrue(ticketDAO.getVehicleRegNumberFromPastUsers(vehicleRegNumber) > 1);
+        assertEquals(2, ticketDAO.getVehicleRegNumberFromPastUsers(vehicleRegNumber));
     }
 
     @Test

@@ -1,10 +1,13 @@
-package com.parkit.parkingsystem;
+package com.parkit.parkingsystem.integration;
 
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
+import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.ParkingSpot;
 import junit.framework.Assert;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.Null;
 
@@ -12,14 +15,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
-public class ParkingSpotDAOTest {
+public class ParkingSpotDAOIT {
 
     private static ParkingSpotDAO parkingSpotDAO;
+    private static DataBasePrepareService dataBasePrepareService;
 
-    @BeforeAll
-    private static void setUp() {
+    @BeforeEach
+    private void setUpPerTest() {
         parkingSpotDAO = new ParkingSpotDAO();
+        dataBasePrepareService = new DataBasePrepareService();
+        dataBasePrepareService.clearDataBaseEntries();
     }
 
     @Test

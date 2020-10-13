@@ -22,6 +22,7 @@ public class DataBaseConfig {
         try {
             FileInputStream fileInputStream = new FileInputStream(new File("resources/credentials.properties"));
             try {
+                // Load a file.properties containing username/password and url of the db
                 properties.load(fileInputStream);
                 user = properties.getProperty("username");
                 password = properties.getProperty("password");
