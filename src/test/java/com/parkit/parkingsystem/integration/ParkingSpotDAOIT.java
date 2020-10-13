@@ -31,7 +31,7 @@ public class ParkingSpotDAOIT {
 
     @Test
     public void getNextAvailableSlotCarTest() throws IOException, ClassNotFoundException {
-        Assert.assertEquals(1, parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
+        Assert.assertEquals(2, parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
     }
 
     @Test
