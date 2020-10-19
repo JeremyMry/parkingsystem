@@ -51,7 +51,7 @@ public class TicketDAOTest {
         dataBasePrepareService.clearDataBaseEntries();
     }
 
-    @Test
+    @Test // Test the method saveTicket()
     public void saveTicketTest() {
         String vehicleRegNumber = inputReaderUtil.readVehicleRegistrationNumber();
 
@@ -66,7 +66,7 @@ public class TicketDAOTest {
         assertTrue(ticketDAO.saveTicket(ticket));
     }
 
-    @Test
+    @Test // Test the method getNextAvailableSlot() with no data
     public void saveTicketWithNoDataTest() {
         String vehicleRegNumber = inputReaderUtil.readVehicleRegistrationNumber();
         Ticket ticket = new Ticket();
@@ -74,14 +74,14 @@ public class TicketDAOTest {
         assertFalse(ticketDAO.saveTicket(ticket));
     }
 
-    @Test
+    @Test // Test the method getTicket() with no data
     public void getTicketNullTest() {
         String vehicleRegNumber = inputReaderUtil.readVehicleRegistrationNumber();
 
         assertNull(ticketDAO.getTicket("AAAAA"));
     }
 
-    @Test
+    @Test // Test the method getTicket()
     public void getTicketTest() {
         String vehicleRegNumber = inputReaderUtil.readVehicleRegistrationNumber();
 
@@ -97,7 +97,7 @@ public class TicketDAOTest {
         assertNotNull(ticketDAO.getTicket(vehicleRegNumber));
     }
 
-    @Test
+    @Test // Test the method getVehicleRegNumberFromPastUsers() with recurrent user
     public void getVehicleRegNumberFromPastUsersTest() throws Exception {
         String vehicleRegNumber = inputReaderUtil.readVehicleRegistrationNumber();
 
@@ -120,14 +120,14 @@ public class TicketDAOTest {
         assertEquals(2, ticketDAO.getVehicleRegNumberFromPastUsers(vehicleRegNumber));
     }
 
-    @Test
+    @Test // Test getVehicleRegNumberFromPastUsersTest() with no recurrent user
     public void getVehicleRegNumberFromPastUsersWithNoDataTest() throws Exception {
         String vehicleRegNumber = inputReaderUtil.readVehicleRegistrationNumber();
 
         assertEquals(0, ticketDAO.getVehicleRegNumberFromPastUsers("AA"));
     }
 
-    @Test
+    @Test // Test the updateTicket() method
     public void updateTicketTest() throws Exception {
 
         String vehicleRegNumber = inputReaderUtil.readVehicleRegistrationNumber();
@@ -152,7 +152,7 @@ public class TicketDAOTest {
         assertTrue(parkingSpot.isAvailable());
     }
 
-    @Test
+    @Test // Test the updateTicket() method with no data to update
     public void updateTicketWithNoDataTest() throws Exception {
 
         String vehicleRegNumber = inputReaderUtil.readVehicleRegistrationNumber();

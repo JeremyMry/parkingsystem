@@ -48,7 +48,7 @@ public class ParkingServiceTest {
         dataBasePrepareService.clearDataBaseEntries();
     }
 
-    @Test
+    @Test // Test if the updateParking() method, the getTicket() method and the updateTicket() method are invoked
     public void processExitingVehicleTest() throws SQLException, IOException, ClassNotFoundException {
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR,false);
@@ -60,17 +60,15 @@ public class ParkingServiceTest {
         when(ticketDAO.updateTicket(any(Ticket.class))).thenReturn(true);
         when(parkingSpotDAO.updateParking(any(ParkingSpot.class))).thenReturn(true);
         parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
-        Date eeee = new Date();
 
         parkingService.processExitingVehicle();
 
         verify(ticketDAO, Mockito.times(1)).getTicket(anyString());
         verify(ticketDAO, Mockito.times(1)).updateTicket(any(Ticket.class));
         verify(parkingSpotDAO, Mockito.times(1)).updateParking(any(ParkingSpot.class));
-        Assert.assertEquals(eeee.getTime() /10000, ticket.getOutTime().getTime() /10000);
     }
 
-    @Test
+    @Test // Test if the updateParking() method and the saveTicket() method are invoked
     public void processIncomingVehicleTest() throws SQLException, IOException, ClassNotFoundException {
         when(inputReaderUtil.readSelection()).thenReturn(1);
         when(parkingSpotDAO.getNextAvailableSlot(any(ParkingType.class))).thenReturn(1);
@@ -85,7 +83,7 @@ public class ParkingServiceTest {
         verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
     }
 
-    @Test
+    @Test // Test than the getVehicleType() method work correctly with cars
     public void getVehicleTypeCarTest() {
         when(inputReaderUtil.readSelection()).thenReturn(1);
         parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -93,7 +91,7 @@ public class ParkingServiceTest {
         Assert.assertEquals(ParkingType.CAR, parkingService.getVehichleType());
     }
 
-    @Test
+    @Test // Test than the getVehicleType() method work correctly with bikes
     public void getVehicleTypeBikeTest() {
         when(inputReaderUtil.readSelection()).thenReturn(2);
         parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -101,7 +99,7 @@ public class ParkingServiceTest {
         Assert.assertEquals(ParkingType.BIKE, parkingService.getVehichleType());
     }
 
-    @Test
+    @Test // Test the getVehicleType() with an unknown vehicle type
     public void getVehicleTypeUnknownTest() {
         when(inputReaderUtil.readSelection()).thenReturn(4);
         parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -109,7 +107,7 @@ public class ParkingServiceTest {
         assertThrows(IllegalArgumentException.class, () -> parkingService.getVehichleType());
     }
 
-    @Test
+    @Test // Test the getVehicleRegNumber() method with correct input
     public void getVehicleRegNumberTest() throws Exception {
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
         parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -117,7 +115,7 @@ public class ParkingServiceTest {
         Assert.assertEquals("ABCDEF", parkingService.getVehichleRegNumber());
     }
 
-    @Test
+    @Test // Test the getVehicleRegNumber() method with null input
     public void getNullVehicleRegNumberTest() throws Exception {
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn(null);
         parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -126,7 +124,7 @@ public class ParkingServiceTest {
     }
 
 
-    @Test
+    @Test // Test the method getNextParkingNumberIfAvailable()
     public void getNextParkingNumberIfAvailableTest() throws SQLException, IOException, ClassNotFoundException {
 
         when(inputReaderUtil.readSelection()).thenReturn(1);

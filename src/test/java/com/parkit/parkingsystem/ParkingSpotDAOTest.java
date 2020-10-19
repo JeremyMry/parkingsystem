@@ -36,21 +36,21 @@ public class ParkingSpotDAOTest {
         parkingSpotDAO.updateParking(parkingSpot);
     }
 
-    @Test
+    @Test // Test the method getNextAvailableSlot() with car
     public void getNextAvailableSlotCarTest() throws IOException, ClassNotFoundException {
         Assert.assertEquals(1, parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
     }
 
-    @Test
+    @Test // Test the method getNextAvailableSlot() with bike
     public void getNextAvailableSlotBikeTest() throws IOException, ClassNotFoundException {
         Assert.assertEquals(4, parkingSpotDAO.getNextAvailableSlot(ParkingType.BIKE));
     }
-    @Test
+    @Test // Test the method getNextAvailableSlot() with null ParkingType
     public void getNextAvailableSlotNullParkingTypeTest() {
         assertThrows(NullPointerException.class, () ->parkingSpotDAO.getNextAvailableSlot(null));
     }
 
-    @Test
+    @Test // Test the method updateParking() with car
     public void updateParkingTest() throws IOException, ClassNotFoundException {
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
         Assert.assertTrue(parkingSpotDAO.updateParking(parkingSpot));
@@ -58,13 +58,13 @@ public class ParkingSpotDAOTest {
         dataBasePrepareService.clearDataBaseEntries();
     }
 
-    @Test
+    @Test // Test the method getNextAvailableSlot() with null ParkingType
     public void updateParkingWithNoParkingTypeTest() throws IOException, ClassNotFoundException {
         ParkingSpot parkingSpot = new ParkingSpot(1, null, false);
         Assert.assertTrue(parkingSpotDAO.updateParking(parkingSpot));
     }
 
-    @Test
+    @Test // Test the method getNextAvailableSlot() with negative Parking Slot
     public void updateParkingWithNegativeParkingSlotTest() throws IOException, ClassNotFoundException {
         ParkingSpot parkingSpot = new ParkingSpot(-1, ParkingType.CAR, false);
         Assert.assertFalse(parkingSpotDAO.updateParking(parkingSpot));

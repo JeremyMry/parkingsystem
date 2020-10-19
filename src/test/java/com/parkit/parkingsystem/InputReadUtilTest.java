@@ -20,7 +20,7 @@ public class InputReadUtilTest {
         inputReaderUtil = new InputReaderUtil();
     }
 
-    @Test
+    @Test // Test the readSelection() method when the input is correct
     public void InputCanBeParseToInt() {
         String data = "1";
         InputStream in = new ByteArrayInputStream(data.getBytes());
@@ -29,7 +29,7 @@ public class InputReadUtilTest {
         Assert.assertEquals(1, inputReaderUtil.readSelection());
     }
 
-    @Test
+    @Test // Test the readSelection() method when the input is incorrect
     public void InputCannotBeParseToInt() {
         String data = "eeeeee";
         InputStream in = new ByteArrayInputStream(data.getBytes());
@@ -38,7 +38,7 @@ public class InputReadUtilTest {
         Assert.assertEquals(-1, inputReaderUtil.readSelection());
     }
 
-    @Test
+    @Test // Test the readSelection() method when the input is empty
     public void InputIsEmpty() {
         String data = "";
         InputStream in = new ByteArrayInputStream(data.getBytes());
@@ -47,7 +47,7 @@ public class InputReadUtilTest {
         Assert.assertEquals(-1, inputReaderUtil.readSelection());
     }
 
-    @Test
+    @Test // Test the readVehicleRegistrationNumber() method when the input is correct
     public void VehicleRegNumberIsCorrect() {
         String data = "12345AZE6";
         InputStream in = new ByteArrayInputStream(data.getBytes());
@@ -56,7 +56,7 @@ public class InputReadUtilTest {
         Assert.assertEquals("12345AZE6", inputReaderUtil.readVehicleRegistrationNumber());
     }
 
-    @Test
+    @Test // Test the readVehicleRegistrationNumber() method when the input is too long
     public void VehicleRegNumberIsTooLong() {
         String data = "12345678910";
         InputStream in = new ByteArrayInputStream(data.getBytes());
@@ -65,15 +65,7 @@ public class InputReadUtilTest {
         assertThrows(IllegalArgumentException.class, () -> inputReaderUtil.readVehicleRegistrationNumber());
     }
 
-    @Test
-    public void VehicleRegNumberIsNull() {
-        InputStream in = null;
-        System.setIn(in);
-
-        assertThrows(NullPointerException.class, () -> inputReaderUtil.readVehicleRegistrationNumber());
-    }
-
-    @Test
+    @Test  // Test the readVehicleRegistrationNumber() method when the input is empty
     public void VehicleRegNumberIsEmpty() {
         String data = "";
         InputStream in = new ByteArrayInputStream(data.getBytes());
