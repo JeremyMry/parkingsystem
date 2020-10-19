@@ -1,4 +1,4 @@
-package com.parkit.parkingsystem.integration;
+package com.parkit.parkingsystem;
 
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
@@ -17,7 +17,7 @@ import java.sql.SQLException;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-public class ParkingSpotDAOIT {
+public class ParkingSpotDAOTest {
 
     private static ParkingSpotDAO parkingSpotDAO;
     private static DataBasePrepareService dataBasePrepareService;
@@ -29,9 +29,16 @@ public class ParkingSpotDAOIT {
         dataBasePrepareService.clearDataBaseEntries();
     }
 
+    @AfterAll
+    private static void closeTest() throws IOException, ClassNotFoundException {
+        dataBasePrepareService.clearDataBaseEntries();
+        ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, true);
+        parkingSpotDAO.updateParking(parkingSpot);
+    }
+
     @Test
     public void getNextAvailableSlotCarTest() throws IOException, ClassNotFoundException {
-        Assert.assertEquals(2, parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
+        Assert.assertEquals(1, parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR));
     }
 
     @Test
@@ -44,19 +51,21 @@ public class ParkingSpotDAOIT {
     }
 
     @Test
-    public void updateParkingTest() throws IOException, ClassNotFoundException, SQLException {
+    public void updateParkingTest() throws IOException, ClassNotFoundException {
         ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
         Assert.assertTrue(parkingSpotDAO.updateParking(parkingSpot));
+
+        dataBasePrepareService.clearDataBaseEntries();
     }
 
     @Test
-    public void updateParkingWithNoParkingTypeTest() throws IOException, ClassNotFoundException, SQLException {
+    public void updateParkingWithNoParkingTypeTest() throws IOException, ClassNotFoundException {
         ParkingSpot parkingSpot = new ParkingSpot(1, null, false);
         Assert.assertTrue(parkingSpotDAO.updateParking(parkingSpot));
     }
 
     @Test
-    public void updateParkingWithNegativeParkingSlotTest() throws IOException, ClassNotFoundException, SQLException {
+    public void updateParkingWithNegativeParkingSlotTest() throws IOException, ClassNotFoundException {
         ParkingSpot parkingSpot = new ParkingSpot(-1, ParkingType.CAR, false);
         Assert.assertFalse(parkingSpotDAO.updateParking(parkingSpot));
     }

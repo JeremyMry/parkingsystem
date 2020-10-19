@@ -3,11 +3,14 @@ package com.parkit.parkingsystem;
 import com.parkit.parkingsystem.constants.ParkingType;
 import com.parkit.parkingsystem.dao.ParkingSpotDAO;
 import com.parkit.parkingsystem.dao.TicketDAO;
+import com.parkit.parkingsystem.integration.service.DataBasePrepareService;
 import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 import junit.framework.Assert;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -25,6 +28,7 @@ import static org.mockito.Mockito.*;
 public class ParkingServiceTest {
 
     private static ParkingService parkingService;
+    private static DataBasePrepareService dataBasePrepareService;
 
     @Mock
     private static InputReaderUtil inputReaderUtil;
@@ -32,6 +36,17 @@ public class ParkingServiceTest {
     private static ParkingSpotDAO parkingSpotDAO;
     @Mock
     private static TicketDAO ticketDAO;
+
+    @BeforeAll
+    private static void setUp() {
+        dataBasePrepareService = new DataBasePrepareService();
+        dataBasePrepareService.clearDataBaseEntries();
+    }
+
+    @AfterAll
+    private static void closeTest() {
+        dataBasePrepareService.clearDataBaseEntries();
+    }
 
     @Test
     public void processExitingVehicleTest() throws SQLException, IOException, ClassNotFoundException {

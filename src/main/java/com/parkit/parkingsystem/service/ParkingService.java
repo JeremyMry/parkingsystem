@@ -32,6 +32,11 @@ public class ParkingService {
             ParkingSpot parkingSpot = getNextParkingNumberIfAvailable();
             if(parkingSpot !=null && parkingSpot.getId() > 0){
                 String vehicleRegNumber = getVehichleRegNumber();
+                Integer fee = ticketDAO.getVehicleRegNumberFromPastUsers(vehicleRegNumber);
+                if (fee >= 2) {
+                    System.out.println(
+                            "Welcome back! As a recurrent client of our parking lot, you'll benefit from a 5% fee.");
+                }
                 parkingSpot.setAvailable(false);
                 parkingSpotDAO.updateParking(parkingSpot);//allot this parking space and mark it's availability as false
 
@@ -98,11 +103,16 @@ public class ParkingService {
 
     public void processExitingVehicle() {
         try{
+            boolean fee = false;
             String vehicleRegNumber = getVehichleRegNumber();
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
             Date outTime = new Date();
             ticket.setOutTime(outTime);
-            fareCalculatorService.calculateFare(ticket);
+            Integer count = ticketDAO.getVehicleRegNumberFromPastUsers(vehicleRegNumber);
+            if (count >= 2) {
+                fee = true;
+            }
+            fareCalculatorService.calculateFare(ticket, fee);
             if(ticketDAO.updateTicket(ticket)) {
                 ParkingSpot parkingSpot = ticket.getParkingSpot();
                 parkingSpot.setAvailable(true);

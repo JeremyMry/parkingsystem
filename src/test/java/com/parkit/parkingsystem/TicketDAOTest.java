@@ -1,4 +1,4 @@
-package com.parkit.parkingsystem.integration;
+package com.parkit.parkingsystem;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -19,7 +19,7 @@ import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.util.InputReaderUtil;
 
 @ExtendWith(MockitoExtension.class)
-public class TicketDAOIT {
+public class TicketDAOTest {
 
     private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
     private static ParkingSpotDAO parkingSpotDAO;
@@ -43,6 +43,11 @@ public class TicketDAOIT {
     @BeforeEach
     private void setUpPerTest() throws Exception {
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn("ABCDEF");
+        dataBasePrepareService.clearDataBaseEntries();
+    }
+
+    @AfterAll
+    private static void closeTest() {
         dataBasePrepareService.clearDataBaseEntries();
     }
 

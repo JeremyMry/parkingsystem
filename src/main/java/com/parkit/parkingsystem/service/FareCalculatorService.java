@@ -6,7 +6,11 @@ import com.parkit.parkingsystem.model.Ticket;
 
 public class FareCalculatorService {
 
-    public void calculateFare(Ticket ticket){
+    private static double twoDigitsAfterVirgule(double number, double decimal) {
+        return ((Math.round(number * decimal)) / decimal);
+    }
+
+    public void calculateFare(Ticket ticket, boolean fee){
         if( (ticket.getOutTime() == null) || (ticket.getOutTime().before(ticket.getInTime())) ){
             throw new IllegalArgumentException("Out time provided is incorrect:"+ticket.getOutTime().toString());
         }
@@ -20,24 +24,21 @@ public class FareCalculatorService {
         double bikeBill = Math.ceil(duration) * Fare.BIKE_RATE_PER_HOUR;
         double bikeBillWithFee = Math.ceil(duration)  * Fare.BIKE_RATE_PER_HOUR_WITH_FEE;
 
-        TicketDAO ticketDAO = new TicketDAO();
-        int count = ticketDAO.getVehicleRegNumberFromPastUsers(ticket.getVehicleRegNumber());
-
         if (duration > 0.5) {
             switch (ticket.getParkingSpot().getParkingType()) {
                 case CAR: {
-                    if (count >= 2) {
-                        ticket.setPrice(carBillWithFee);
+                    if (fee) {
+                        ticket.setPrice(twoDigitsAfterVirgule(carBillWithFee, 100.0));
                     } else {
-                        ticket.setPrice(carBill);
+                        ticket.setPrice(twoDigitsAfterVirgule(carBill, 100.0));
                     }
                     break;
                 }
                 case BIKE: {
-                    if (count >= 2) {
-                        ticket.setPrice(bikeBillWithFee);
+                    if (fee) {
+                        ticket.setPrice(twoDigitsAfterVirgule(bikeBillWithFee, 100.0));
                     } else {
-                        ticket.setPrice(bikeBill);
+                        ticket.setPrice(twoDigitsAfterVirgule(bikeBill, 100.0));
                     }
                     break;
                 }
